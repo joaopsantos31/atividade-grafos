@@ -1,0 +1,118 @@
+
+grafo = {
+  "V1": ["V2"],
+  "V2": ["V3", "V5"],
+  "V3": ["V6", "V4"],
+  "V4": ["V5"],
+  "V5": ["V1", "V7"],
+  "V6": ["V2"],
+  "V7": [],
+}
+
+def inserir_verticie(v):
+  grafo[v] = []
+  print(grafo, "\n")
+  pass
+
+def remover_verticie(v):
+  if v in grafo:
+    grafo.pop(v)
+    for a, f in grafo.items():
+      if v in f:
+        grafo[a].remove(v)
+    print(grafo,"\n")
+  else:
+    print("Esse vérticie não existe\n")
+  pass
+
+def inserir_aresta(v, add):
+  grafo[v].append(add)
+  print(grafo[v],"\n")
+  pass
+
+def remover_aresta(v, rmv):
+  if v in grafo and rmv in grafo[v]:
+    grafo[v].remove(rmv)
+    print(grafo[v],"\n")
+  else:
+    print("Essa aresta não existe\n")
+  pass
+
+def grau():
+  for a, f in grafo.items():
+    tamanho = len(f)
+    print(a, tamanho)
+  print("\n")
+  pass
+
+def verificar_aresta(v, fim):
+  if v in grafo and fim in grafo:
+    if fim in grafo[v]:
+      print("Essa aresta existe","\n")
+    else:
+      print("Essa aresta não existe","\n")
+  else:
+    print("Esse vérticie não existe\n")
+  pass
+
+def vizinhos(v):
+  if v in grafo:
+    print(grafo[v],"\n")
+  print("Esse vérticie não existe\n")
+  pass
+
+def percurso(v, fim):
+  if v in grafo and fim in grafo:
+    fila = [[v]]
+
+    while fila:
+      caminho = fila.pop(0)
+      atual = caminho[-1]
+      if atual == fim:
+        print(" -> ".join(caminho),"\n")
+        return
+
+      for vizinho in grafo[atual]:
+        if vizinho not in caminho:
+          fila.append(caminho + [vizinho])
+
+    print("Não existe caminho.","\n")
+  print("Esse vérticie não existe\n")
+  pass
+
+#MENU
+menu = 1
+while menu != 0:
+  menu =int(input("digite 1 para exibir o grafo \ndigite 2 para inserir um vérticie \ndigite 3 para inserir uma aresta \ndigite 4 para remover um vérticie \ndigite 5 para remover uma aresta \ndigite 6 para calcular o gral de cada vérticie \ndigite 7 para Verificar se existe uma aresta que vai de um vértice para o outro \ndigite 8 para Listar todos os Vizinhos de um vértice \ndigite 9 Verificar se um determinado percurso é possível \ndigite 10 para desligar o sistema \n"))
+
+  if menu == 1:
+    print(grafo)
+
+  elif menu == 2:
+    inserir_verticie(input("Digite o nome do vérticie: "))
+
+  elif menu == 3:
+    inserir_aresta(input("De onde a aresta vem: "), input("Para onde vai: "))
+
+  elif menu == 4:
+    remover_verticie(input("Vérticie a remover: "))
+
+  elif menu == 5:
+    remover_aresta(input("De onde a aresta vem: "), input("Para onde vai: "))
+
+  elif menu == 6:
+    grau()
+
+  elif menu == 7:
+    verificar_aresta(input("De onde a aresta vem: "), input("Vérticie que pode ter: "))
+
+  elif menu == 8:
+    vizinhos(input("Digite o nome do vérticie: "))
+
+  elif menu == 9:
+    caminho = percurso(input("De onde a aresta vem: "), input("Onde quer chegar: "))
+
+  elif menu == 10:
+    menu = 0
+  else:
+    print("Esse número não está disponível no menu")

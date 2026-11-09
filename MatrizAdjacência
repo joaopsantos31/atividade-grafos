@@ -1,0 +1,235 @@
+#Funções
+
+def criar_grafo():
+  Matriz = [[None]]
+  return Matriz
+
+
+def criar_percurso():
+  Percurso = []
+  return Percurso
+
+
+def inserir_vertice(Matriz, NomeVertice):
+  Matriz.append([NomeVertice])
+  Matriz[0].append(NomeVertice)
+
+  Contador = 0
+  for i in Matriz:
+    Contador +=1
+
+  for i in range(1, Contador):
+    Matriz[Contador-1].append(0)
+
+  for Regua in range(1, Contador-1):
+    Matriz[Regua].append(0)
+
+  return Matriz
+
+
+def remover_vertice(Matriz, NomeVertice):
+  indice = Matriz[0].index(NomeVertice)
+
+  for i in range(0, len(Matriz)):
+    del Matriz[i][indice]
+  del Matriz[indice]
+
+  return Matriz
+
+
+def inserir_aresta(Matriz, arestain, arestaout):
+    indiceout = Matriz[0].index(arestaout)
+    indicein = Matriz[0].index(arestain)
+    Matriz[indicein][indiceout] = 1
+
+    return Matriz
+
+
+def remover_aresta(Matriz, arestain, arestaout):
+  indiceout = Matriz[0].index(arestaout)
+  indicein = Matriz[0].index(arestain)
+  Matriz[indicein][indiceout] = 0
+
+  return Matriz
+
+
+def calcular_grau_entrada(Matriz, NomeVertice):
+  indice = Matriz[0].index(NomeVertice)
+  Grau = 0
+  for i in range(1, len(Matriz[0])):
+    if(Matriz[indice][i] == 1):
+      Grau +=1
+
+  return Grau
+
+
+def calcular_grau_saida(Matriz, NomeVertice):
+  indice = Matriz[0].index(NomeVertice)
+  Grau = 0
+  for i in range(1, len(Matriz)):
+    if(Matriz[i][indice] == 1):
+      Grau += 1
+
+  return Grau
+
+
+def calcular_grau_total(Matriz, NomeVertice):
+  indice = Matriz[0].index(NomeVertice)
+  Grau = 0
+  for i in range(1, len(Matriz[0])):
+    if(Matriz[indice][i] == 1):
+      Grau +=1
+  for i in range(1, len(Matriz)):
+    if(Matriz[i][indice] == 1):
+      Grau += 1
+
+  return Grau
+
+
+def verificar_aresta(Matriz, Verticein, Verticeout):
+  indicein = Matriz[0].index(Verticein)
+  indiceout = Matriz[0].index(Verticeout)
+  if(Matriz[indicein][indiceout] == 1):
+    print("A aresta existe!")
+  else:
+    print("A aresta não existe!")
+
+  return
+
+
+def listar_vertices_vizinhos_entrada(Matriz, NomeVertice):
+  indice = Matriz[0].index(NomeVertice)
+  for i in range(1, len(Matriz[0])):
+    if(Matriz[indice][i] == 1):
+      print(Matriz[0][i])
+
+  return
+
+
+def listar_vertices_vizinhos_saida(Matriz, NomeVertice):
+  indice = Matriz[0].index(NomeVertice)
+  for i in range(1, len(Matriz)):
+    if(Matriz[i][indice] == 1):
+      print(Matriz[0][i])
+
+  return
+
+
+def listar_vertices_vizinhos_todos(Matriz, NomeVertice):
+  indice = Matriz[0].index(NomeVertice)
+  print("Vertices vizinhos de entrada: ")
+  for i in range(1, len(Matriz[0])):
+    if(Matriz[indice][i] == 1):
+      print(Matriz[0][i])
+  print("Vertices vizinhos de saída: ")
+  for i in range(1, len(Matriz)):
+    if(Matriz[i][indice] == 1):
+      print(Matriz[0][i])
+
+  return
+
+
+def verificar_percurso(Matriz, ListaPercurso):
+  for i in range(1, len(ListaPercurso)):
+    Verticeout = ListaPercurso[i-1]
+    Verticein = ListaPercurso[i]
+    indiceout = Matriz[0].index(Verticeout)
+    indicein = Matriz[0].index(Verticein)
+    if(Matriz[indicein][indiceout] == 0):
+      print("Não há caminho!")
+      return
+  print("Tem caminho")
+  return
+
+
+def exibir_grafo(Matriz):
+  linha = "|"
+  for i in range(0, len(Matriz[0])):
+    Linha = ""
+    for e in range(0, len(Matriz)):
+      if(Matriz[e][i] != None):
+        Linha = Linha+(f" {Matriz[e][i]} |")
+      else:
+        Linha = Linha+(f" X |")
+    print(Linha)
+  return
+
+
+
+
+
+#Menu
+Grafo = criar_grafo
+Percurso = []
+Quantidade = 0
+Contador = 0
+
+
+
+print("BEM VINDO AO CRIADOR DE MATRIZ!")
+print("SELECIONE A FUNCIONALIDADE DESEJADA:")
+print("DIGITE:\n1: Criar Grafo\n2: Criar Percurso\n3: Inserir Vértice\n4: Remover Vértice\n5: Inserir Aresta\n6: Remover Aresta\n7: Calcular Grau de Entrada\n8: Calcular Grau de Saída\n9: Calcular Grau Total\n10: Verificar Aresta\n11: Listar Vértices Vizinhos de Entrada\n12: Listar Vértices Vizinhos de Saída\n13: Listar Todos Vértices Vizinhos\n14: Verificar Percurso\n15: Exibir Grafo\n16: Sair do Sistema")
+
+
+
+
+while(Contador == 0):
+  Escolha = int(input("Digite: "))
+  if(Escolha == 1):
+    Grafo = criar_grafo()
+  elif(Escolha == 2):
+    Percurso = criar_percurso()
+  elif(Escolha == 3):
+    Vertice = input("Digite o nome do vértice: ")
+    Grafo = inserir_vertice(Grafo, Vertice)
+  elif(Escolha == 4):
+    Vertice = input("Digite o nome do vértice: ")
+    Grafo = remover_vertice(Grafo, Vertice)
+  elif(Escolha == 5):
+    Arestain = input("Digite o vértice de entrada: ")
+    Arestaout = input("Digite o vértice de saída: ")
+    Grafo = inserir_aresta(Grafo, Arestain, Arestaout)
+  elif(Escolha == 6):
+    Arestain = input("Digite o vértice de entrada: ")
+    Arestaout = input("Digite o vértice de saída: ")
+    Grafo = remover_aresta(Grafo, Arestain, Arestaout)
+  elif(Escolha == 7):
+    Vertice = input("Digite o nome do vértice: ")
+    Grau = calcular_grau_entrada(Grafo, Vertice)
+    print(f"O grau de entrada do vértice: {Vertice} é {Grau}")
+  elif(Escolha == 8):
+    Vertice = input("Digite o nome do vértice: ")
+    Grau = calcular_grau_saida(Grafo, Vertice)
+    print(f"O grau de saída do vértice: {Vertice} é {Grau}")
+  elif(Escolha == 9):
+    Vertice = input("Digite o nome do vértice: ")
+    Grau = calcular_grau_total(Grafo, Vertice)
+    print(f"O grau total do vértice b: {Vertice} é {Grau}")
+  elif(Escolha == 10):
+    Arestain = input("Digite o vértice de entrada: ")
+    Arestaout = input("Digite o vértice de saída: ")
+    verificar_aresta(Grafo, Arestain, Arestaout)
+  elif(Escolha == 11):
+    Vertice = input("Digite o nome do vértice: ")
+    listar_vertices_vizinhos_entrada(Grafo, Vertice)
+  elif(Escolha == 12):
+    Vertice = input("Digite o nome do vértice: ")
+    listar_vertices_vizinhos_saida(Grafo, Vertice)
+  elif(Escolha == 13):
+    Vertice = input("Digite o nome do vértice: ")
+    listar_vertices_vizinhos_todos(Grafo, Vertice)
+  elif(Escolha == 14):
+    Quantidade = int(input("Digite quantos vértices terão seu percurso: "))
+    for i in range (0, Quantidade):
+      Percurso.append(input("Digite o vértice: "))
+    verificar_percurso(Grafo, Percurso)
+  elif(Escolha == 15):
+    exibir_grafo(Grafo)
+  elif(Escolha == 16):
+    Contador +=1
+  else:
+    print("Opição escolhida não existe")
+
+
+print("Saindo do sistema")
+print("Até mais!")
